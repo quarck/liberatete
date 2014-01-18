@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Liberate Te</string>
+    <string name="action_settings">Settings</string>
+
+    
+    <string name="device_admin_label">Liberate.Te</string>
+	<string name="device_admin_description">Liberate Te Ex Inferis</string>
+
+	<string name="hintTop"><b><i>Liberate.Te</i> needs to be configured</b>\nPlease follow steps below:\n</string>
+	
+	<string name="step1"><b>Step1:</b>\nSet remote control password\n(click me)</string>
+	<string name="step1done"><b>Step1:</b>\nSet remote control password - DONE!</string>
+	<string name="step2"><b>Step2:</b>\nEnable device admin\n(click me)</string>
+	<string name="step2done"><b>Step2:</b>\nEnable device admin - DONE!</string>
+	<string name="step3"><b>Step3:</b>\nHide launcher icon\n(click me)</string>
+	<string name="step3done"><b>Step3:</b>\nHide launcher icon - DONE!</string>
+	
+	
+	<string name="hint"><b>Remote Control Commands:</b>\n 
+	    <ul>
+	    <li><b><i>PASSWORD</i> WIPE</b> - wipe your device</li>\n
+	    <li><b><i>PASSWORD</i> FULL WIPE</b> - wipe your device + SD card</li>\n
+	    </ul>
+	    \nTo disable <i>Liberate.Te</i>, follow steps below:\n
+	    <ul><li>Open Settings app</li>\n
+	    <li>Open Security </li> \n
+		<li>Open Device administrators</li>\n
+		<li>Disable device admin for <i>Liberate.Te</i></li>\n
+		<li>Uninstall <i>Liberate.Te</i> via android package managed</li>
+		</ul>
+	</string>
+	
+	<string name="setpassword">Set your remote control password</string>
+    <string name="initial_instruction">Please note: app would save original password (internally), not its hash.</string>
+	<string name="password_too_short">Password is tooo short! Min 4 chars, recommended at least 7.</string>
+	<string name="password_didnt_match">Passwords didn\'t match!</string>
+	<string name="password_is_shorter_than_7_sym">Entered password is shorter than 7 symbols. Are you sure to use short password? Short password makes it easier to guess your password and wipe your device remotely.</string>
+	<string name="use_short">Use short</string>
+	<string name="cancel">Cancel</string>
+	<string name="agree">Agree</string>
+	<string name="disagree">Disagree</string>
+
+	<string name="disclaimer">DISCLAIMER\nBy using this application you agree that you understand that main purpose of this application is to perform device factory reset, this would erase everything on your device!\nBeware of accidental triggering this function and make sure no one knows your password, so no one could remotely wipe your device.\nAuthor of this application takes no responsibility for accidental data loss.\nSoftware came with NO WARRANTY.\nBefore using this application you must agree with this disclaimer.</string>
+
+	<string name="launcher_icon_disabled">Launcher icon disabled. Reboot the device.</string>
+	<string name="enable_admin">Enable Liberate.Me as admin</string>
+    <string name="password_is_not_encrypted">WARNING: The password is stored UNENCRYPTED!\nNever ever use the same password in any other place\nAlso \'command\' message will be visible same as regular SMS, so make sure to never re-use the same password again after triggering the remote wipe once.</string>
+
+    <string name="title_activity_set_password">Set Password</string>
+
+    <!-- Strings related to login -->
+
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_confirmation">Confirm Password</string>
+
+    <string name="set_password">Set Password</string>
+	<string name="permissions_rationale">These permissions are required for app to work</string>
+
+</resources>

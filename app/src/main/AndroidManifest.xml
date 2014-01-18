@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.github.quarck.liberate.te.ex.inferis"
+    >
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.DEVICE_POWE"/>
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name="com.github.quarck.liberate.te.ex.inferis.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="com.github.quarck.liberate.te.ex.inferis.SmsBroadcastReceiver"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="999999" >
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" >
+                </action>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.github.quarck.liberate.te.ex.inferis.MyDeviceAdminReceiver"
+            android:description="@string/device_admin_description"
+            android:label="@string/device_admin_description"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            >
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_params" />
+
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.github.quarck.liberate.te.ex.inferis.SetPasswordActivity"
+            android:label="@string/title_activity_set_password"
+            android:parentActivityName="com.github.quarck.liberate.te.ex.inferis.MainActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.quarck.liberate.te.ex.inferis.MainActivity" />
+        </activity>
+    </application>
+
+</manifest>
