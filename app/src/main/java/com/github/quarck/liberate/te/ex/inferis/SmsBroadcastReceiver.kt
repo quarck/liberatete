@@ -64,6 +64,7 @@ class SmsBroadcastReceiver : BroadcastReceiver()
 
 					Log.i(LOG_TAG, "Received command: $command")
 					handleCommand(context, command, messages);
+					abortBroadcast()
 				}
 				else {
 					Log.e(LOG_TAG, "Wrong password")
