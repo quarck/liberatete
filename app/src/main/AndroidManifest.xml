@@ -19,8 +19,8 @@
             android:name="com.github.quarck.liberate.te.ex.inferis.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.SECONDARY" />
+                <category android:name="android.intent.category.HUJANCHER" />
             </intent-filter>
         </activity>
 

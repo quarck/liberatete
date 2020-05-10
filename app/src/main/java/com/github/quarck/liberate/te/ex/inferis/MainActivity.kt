@@ -42,47 +42,9 @@ class MainActivity : Activity()
 		ComponentName(this, MyDeviceAdminReceiver::class.java)
 	}
 
-	private var displayingDisclamer = false
-
     private lateinit var buttonEnableDeviceAdmin: TextView
     private lateinit var buttonSetPassword: TextView
-    private lateinit var buttonDisableLauncherIcon: TextView
 
-
-    private fun displayDisclaimer(ctx: Context)
-	{
-		if (getIsDisclaimerAgreed(ctx))
-			return
-
-		if (displayingDisclamer)
-		// already displaying, launched from another location
-			return
-
-		displayingDisclamer = true
-
-		val activity = this
-
-
-		// Use the Builder class for convenient dialog construction
-		AlertDialog
-			.Builder(this)
-			.setMessage(getString(R.string.disclaimer))
-			.setCancelable(false)
-			.setPositiveButton(getString(R.string.agree), {
-				_: DialogInterface?, _: Int ->
-				setDisclaimerAgreed(ctx)
-				displayingDisclamer = false
-
-                checkAndRequestPermissions();
-			})
-			.setNegativeButton(getString(R.string.disagree), {
-				_: DialogInterface?, _: Int ->
-				displayingDisclamer = false
-				activity.finish()
-			})
-			.create()
-			.show()
-	}
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -91,11 +53,9 @@ class MainActivity : Activity()
 
         buttonEnableDeviceAdmin = findViewById<TextView>(R.id.buttonEnableDeviceAdmin)
         buttonSetPassword = findViewById<TextView>(R.id.buttonSetPassword)
-        buttonDisableLauncherIcon = findViewById<TextView>(R.id.buttonDisableLauncherIcon)
 
 		buttonSetPassword.setOnClickListener(this::stepOneSetPassword)
 		buttonEnableDeviceAdmin.setOnClickListener(this::stepTwoEnableAdmin)
-		buttonDisableLauncherIcon.setOnClickListener(this::stepThreeDisableIcon)
 	}
 
     private fun checkAndRequestPermissions() {
@@ -105,13 +65,13 @@ class MainActivity : Activity()
                         .Builder(this)
                         .setMessage(getString(R.string.permissions_rationale))
                         .setCancelable(false)
-                        .setPositiveButton(getString(android.R.string.ok), { _: DialogInterface?, _: Int ->
-                            PermissionsManager.requestPermissions(this)
-                        })
-                        .setNegativeButton(getString(android.R.string.cancel), { _: DialogInterface?, _: Int ->
-                            this@MainActivity.finish()
-                        })
-                        .create()
+                        .setPositiveButton(getString(android.R.string.ok)) { _: DialogInterface?, _: Int ->
+							PermissionsManager.requestPermissions(this)
+						}
+						.setNegativeButton(getString(android.R.string.cancel)) { _: DialogInterface?, _: Int ->
+							this@MainActivity.finish()
+						}
+						.create()
                         .show()
             } else {
                 PermissionsManager.requestPermissions(this)
@@ -123,14 +83,12 @@ class MainActivity : Activity()
 	{
 		super.onResume()
 		updateControls()
-
-        if (getIsDisclaimerAgreed(this))
-            checkAndRequestPermissions();
+		checkAndRequestPermissions();
 	}
 
 	private fun updateControls()
 	{
-		displayDisclaimer(this)
+		checkAndRequestPermissions();
 
 		val passwordConfigured = isPasswordConfigured;
 
@@ -139,10 +97,7 @@ class MainActivity : Activity()
 
 		val adminActive = isActiveAdmin;
 
-        buttonDisableLauncherIcon.isEnabled = adminActive
         buttonEnableDeviceAdmin.setText(if (adminActive) R.string.step2done else R.string.step2)
-
-        buttonDisableLauncherIcon.setText(if (getLauncherDisabled(this)) R.string.step3done else R.string.step3)
 	}
 
 	fun stepOneSetPassword(v: View)
@@ -156,23 +111,6 @@ class MainActivity : Activity()
 	fun stepTwoEnableAdmin(v: View)
 	{
 		enableAdmin()
-	}
-
-	fun stepThreeDisableIcon(v: View)
-	{
-		// hide launcher icon
-
-		packageManager.setComponentEnabledSetting(
-			componentName,
-			PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-			PackageManager.DONT_KILL_APP)
-
-		setLauncherDisabled(this)
-
-		updateControls()
-
-		Toast.makeText(applicationContext, getString(R.string.launcher_icon_disabled),
-				Toast.LENGTH_LONG).show()
 	}
 
 	private val isPasswordConfigured: Boolean
@@ -201,7 +139,6 @@ class MainActivity : Activity()
 		val SHARED_PREF = "main_pref"
 		val PASSWORD_KEY = "pwd"
 		val LAUNCHER_DISABLED_KEY = "ld"
-		val DISCLAIMER_AGREED = "ag"
 
 		fun Context.setPrefs(fn: SharedPreferences.Editor.() -> Unit): Unit
 		{
@@ -216,12 +153,6 @@ class MainActivity : Activity()
 			val prefs = this.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
 			return prefs.fn()
 		}
-
-		fun setDisclaimerAgreed(ctx: Context)
-			= ctx.setPrefs { putBoolean(DISCLAIMER_AGREED, true) }
-
-		fun getIsDisclaimerAgreed(ctx: Context): Boolean
-			= ctx.getPrefs { getBoolean(DISCLAIMER_AGREED, false) }
 
 		fun setPassword(ctx: Context, strPassword: String)
 			= ctx.setPrefs { putString(PASSWORD_KEY, strPassword) }
